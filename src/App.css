@@ -1,184 +1,437 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-}
-
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
-}
-
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
+*{
   padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+  margin:0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+p{
+  font-size: 15px;
+}
+/* register form  */
+.Registerform{
+  height: 100vh;
+  align-content: center;
+}
+.registerbox{
+  border: 1px solid gainsboro;
+  border-radius: 0.4rem;
+  margin: auto;
+}
+.registerbox form{
+  padding: 3rem;
+}
+.registerbox img{
+  height: 100%;
+  background: rgb(210, 217, 250);
+}
+.registerbox form h3{
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+}
+.registerbox form p{
+  color: rgb(67, 67, 67);
+}
+.registerbox form label{
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.registerbox form .form-group{
+  margin-bottom: 1rem;
 }
-
-.ticks {
-  position: relative;
+.registerbox form button{
+  background: rgb(45, 56, 184);
+  margin-top: 1rem;
   width: 100%;
+  color:#fff;
+  padding:.5rem;
+  border-radius: .4rem;
+  border:none;
+  margin-bottom: 1rem;
+}
+.registerbox form button:hover{
+  background: #000;;
+}
+.registerbox form .form_btn p{
+  text-align: center;
+}
+.registerbox form .form_btn p a{
+  text-decoration: none;
+}
+.registerbox form .form_btn p a:hover{
+  color:#000;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+/* sidebar css  */
+.sidebar{
+  background: #000;
+  padding: 2rem 1rem;
+  border-radius: 0.5rem;
+  min-width: 18rem;
+}
+.fullpage{
+  display: flex;
+  min-height: 100vh;
+  height: 100%;
+  padding: 1.5rem 0 1.5rem 1.5rem;
+   background: rgb(249, 250, 255);
+}
+.sidebar a{
+  text-decoration: none;
+  color:#fff;
+}
+.sidebar .logo a{
+font-size: 1.5rem;
+font-weight: 700;
+margin-bottom: 1.5rem;
+display: block;
+}
+.sidebar .logo a i{
+  padding-right: 0.7rem;
+  color:rgb(197, 216, 249)
+}
+.sidebar ul li{
+  list-style: none;
+  margin-bottom: 0.6rem;
+  width: 100%;
+   padding: 0.7rem 1rem;
+}
+.sidebar ul{
+  padding-left: 0;
+  margin-bottom: 0;
+}
+.sidebar ul li a{
+  font-size: 16px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.sidebar ul li a i{
+  padding-right: 1rem;
+  color:#fff;
+  font-size: 14px;
+}
+.sidebar ul li.active{
+  background: rgb(45, 56, 184);
+  border-radius: 0.2rem;
+  color:#fff;
+ 
+}
+.sidebar ul li:hover{
+  background: rgb(45, 56, 184);
+  border-radius: 0.2rem;
+  color:#fff;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+/* header css */
+header{
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem;
+  background: #fff;
+  border-bottom: 1px solid gainsboro;
+}
+main{
+  background: rgb(249, 250, 255);
+  width: 100%;
+  
+}
+header button i{
+  color:rgb(45, 56, 184);
+  padding-right: 0.5rem;
+}
+header button {
+  border:none;
+  background: none;
+  font-size: 18px;
+  font-weight: 600;
+  color:#000;
+
+}
+
+/* dashboard design css  */
+/* statiscs css */
+.innercontent{
+  padding:  3rem 0 0 2rem;
+  width: 90%;
+}
+.innercontent h1{
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.innercontent .static-box ul{
+    padding-left: 0;
+    margin-bottom: 0;
+    width: 100%;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+.innercontent .static-box ul li{
+  list-style: none;
+  height: 100%;
+  padding: 1.5rem;
+  background: rgb(255, 255, 255);
+  width: 100%;
+  /* box-shadow: 0px 0px 18px 2px rgba(220, 220, 220, 0.599); */
+  border-radius: 0.5rem;
+  border:1px solid gainsboro
+}
+.innercontent .static-box ul li h4{
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+.innercontent .static-box ul li h3{
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+.innercontent .static-box ul li p{
+color: rgb(22, 126, 34);
+font-size: 14px;
+font-weight: 400;
+margin-bottom: 0;
+}
+/* statiscs css  end*/
+
+/* product table css  */
+.productlist{
+  margin-top: 2rem;
+  width: 100%;
+  background: #fff;
+  padding: 1.5rem;
+  border:1px solid gainsboro;
+  border-radius: 0.5rem;
+  
+}
+.productlist .prolist-title{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  
+}
+.productlist .prolist-title h4{
+  font-size: 20px;
+  font-weight: 800;
+}
+.productlist .prolist-title a{
+text-align: right;
+border:1px solid rgb(45, 56, 184);
+color:rgb(45, 56, 184);
+font-size: 15px;
+background: transparent;
+padding: 0.4rem 0.8rem;
+border-radius: 0.3rem;
+width: fit-content;
+text-decoration: none;
+margin-left: auto;
+transition: 0.2s;
+}
+.productlist .prolist-title a:hover{
+  background: rgb(45, 56, 184);
+  color:#fff;
+}
+.productlist table{
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.productlist table thead{
+  background: rgba(223, 223, 223, 0.334);
+}
+.productlist table thead tr th{
+  padding: 0.5rem;
+ font-size: 16px;
+ font-weight: 700;
+}
+.productlist table tbody {
+  padding-top: 1rem;
+}
+.productlist table tbody tr td{
+  padding: 0.5rem ;
+  border-bottom: 1px solid gainsboro;
+}
+.productlist table tbody tr:last-child td{
+  border-bottom: 0;
+}
+.price{
+  color: green;
+}
+.productlist table tbody tr a{
+  color: #fff;
+  background:rgb(45, 56, 184);
+  font-size: 15px;
+  padding: 0.4rem 0.8rem;
+  border:none;
+  border-radius: 0.3rem;
+  text-decoration: none;
+}
+.productlist table tbody tr a:hover{
+  background: #000;
+}
+.productlist table tbody tr td img{
+  width: 4rem;
+  height: auto;
+}
+.listingtitle{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.custom_btn{
+background: rgb(45, 56, 184);
+color:#fff;
+padding: 0.7rem 0.8rem;
+border-radius: 0.3rem;
+border:none;
+height: max-content;
+text-decoration: none;
+transition: 0.2s;
+}
+.custom_btn:hover{
+  background: #000;
+}
+
+/* search css  */
+.search_filter{
+  margin-top: 2rem;
+}
+.search_filter form{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:2rem;
+}
+.form-control:focus , .form-control:focus-visible{
+box-shadow: none !important;
+outline: none !important;
+
+}
+.search_filter form .form-control{
+  padding: 0.6rem;
+  padding-left: 2.5rem;
+
+}
+.search-icon {
+  position: absolute;
+  top: 55%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 14px;
+}
+
+.search_filter form .form-group{
+  position: relative;
+}
+/* product details page design  */
+.productdetails{
+  margin-top:2.5rem;
+}
+.productdetails .proinfo {
+  padding-inline: 2rem ;
+}
+.productdetails .proinfo h3{
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.productdetails .proinfo ul {
+  padding-left: 0;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+.productdetails .proinfo ul li{
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:2rem;
+  font-size: 16px;
+}
+.productdetails .proinfo h5{
+font-size: 17px;
+font-weight: 600;
+}
+.update-delete{
+display: flex;
+gap:1.5rem;
+margin-top: 2rem;
+}
+.update-delete .custom_btn{
+  padding-inline: 1.2rem;
+}
+.update-delete .custom_btn.deletebtn{
+  background: orangered;
+}
+.update-delete .custom_btn.deletebtn:hover{
+  background: #000;
+}
+
+/* add products form css  */
+.image-upload {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 15px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.image-upload:hover {
+  border-color: #0d6efd;
+  background: #f8f9fa;
+}
+
+.image-upload i {
+  font-size: 40px;
+  color: #0d6efd;
+  margin-bottom: 10px;
+}
+
+.image-upload p {
+  margin: 8px 0 4px;
+  font-weight: 600;
+}
+
+.image-upload span {
+  color: #777;
+  font-size: 14px;
+}
+.productform{
+  background: #fff;
+  padding: 2rem;
+  margin-top: 3rem;
+  border:1px solid gainsboro;
+  border-radius: 0.4rem;
+}
+.productform .twocolumns{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:2rem;
+  width: 100%;
+}
+.productform .twocolumns .form-group{
+  width: 100%;
+}
+.productform .form-control{
+  padding: 0.7rem;
+}
+.productform label{
+  margin-bottom: 1rem;
+  font-weight: 700;
+  display: block;
+}
+.forimage{
+  display: block;
+}
+.productform textarea{
+  height: 8rem;
+}
+.productform .addpro{
+margin-top: 2rem;
 }

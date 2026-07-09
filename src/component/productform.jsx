@@ -1,7 +1,10 @@
 import "../App.css";
-import { useReducer } from "react";
+import { useReducer , useState } from "react";
 import { useProductContext } from "../context/productcontext";
 import {v4 as uuidv4} from "uuid";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
   const initialState = {
     name:"",
@@ -22,7 +25,7 @@ import {v4 as uuidv4} from "uuid";
 
 
 const ProductForm = () => {
-
+  const navigate = useNavigate();
  const {ProductHandler} = useProductContext(); 
  const [ProData , dispatch] = useReducer(formReducer , initialState)
  
@@ -39,6 +42,7 @@ const ProductForm = () => {
   ProductHandler(products);
   console.log("this is my data " , products)
   dispatch({type:"RESET"})
+  navigate("/products")
   return initialState;
  }
 
@@ -48,7 +52,7 @@ const ProductForm = () => {
         <div className="row">
           <div className="col-lg-12">
             <form onSubmit={SubmitHandler}>
-              <div class="twocolumns">
+              <div className="twocolumns">
               <div className="form-group">
                 <label>Product Name</label>
                 <input type="text" placeholder="Product Name.." name="name" className="form-control" value={ProData.name} onChange={formHandler}></input>
@@ -93,13 +97,41 @@ const ProductForm = () => {
 };
 
 const UpdateForm = ()=>{
+  const navigate = useNavigate();
+
+  const {productData , UpdatedHandler} = useProductContext();
+  const {id} = useParams();
+  const products = productData.find((product)=> product.id === id);
+  const [updateData , setUpdateData] = useState({
+    id:products?.id,
+    name:products?.name,
+    category:products?.category,
+    price:products?.price,
+    description:products?.description,
+  });
+ const changeHandler = (e)=>{
+  const { name , value} = e.target;
+  setUpdateData((prevData)=>{return {...prevData , [name] : value}})
+ }
+ const submitUpdate = (e)=>{
+  e.preventDefault();
+  UpdatedHandler(updateData);
+  navigate(`/productsdetails/${id}`);
+  return setUpdateData({
+    id:"",
+    name:"",
+    category:"",
+    price:"",
+    description:"",
+  })
+ }
    return (
     <section className="productform">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <form>
-              <div class="twocolumns">
+            <form onSubmit={submitUpdate}>
+              <div className="twocolumns">
               <div className="form-group">
                 <label>Product Name</label>
                 <input
@@ -107,11 +139,13 @@ const UpdateForm = ()=>{
                   placeholder="Product Name.."
                   name="name"
                   className="form-control"
+                  value={updateData.name}
+                  onChange={changeHandler}
                 ></input>
               </div>
               <div className="form-group">
                 <label>Category</label>
-                <select className="form-control" name="category">
+                <select className="form-control" name="category" value={updateData.category} onChange={changeHandler}>
                   <option value="">Select Category</option>
                   <option value="Electronics">Electronics</option>
                   <option value="Fashion">Fashion</option>
@@ -125,6 +159,8 @@ const UpdateForm = ()=>{
                   placeholder="Enter price"
                   name="price"
                   className="form-control"
+                  value={updateData.price}
+                  onChange={changeHandler}
                 ></input>
               </div>
               <div className="form-group forimage">
@@ -140,7 +176,7 @@ const UpdateForm = ()=>{
               </div>
               <div className="form-group">
                 <label>Description</label>
-                <textarea className="form-control" name="description" placeholder="Enter product description"></textarea>
+                <textarea className="form-control" name="description" placeholder="Enter product description" onChange={changeHandler} value={updateData.description}></textarea>
               </div>
               <div className="addpro">
                 <button className="custom_btn">Update Product</button>

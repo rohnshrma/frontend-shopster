@@ -3,6 +3,8 @@ import dummypro from "../assets/images/dummyproducts.webp";
 import { useProductContext } from "../context/productcontext";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 const ViewProduct = ()=>{
 const navigate = useNavigate();
@@ -30,7 +32,7 @@ const product = productData.find((item) => item.id == id)
                             <h5>Description</h5>
                             <p>{product?.description}</p>
                             <div className="update-delete">
-                                <button type="submit" className="custom_btn">Update</button>
+                                <Link className="custom_btn" to={`/updateproduct/${id}`}>Update</Link>
                                 <button type="submit" className="custom_btn deletebtn" onClick={handleDelete}>Delete</button>
                             </div>
                         </div>

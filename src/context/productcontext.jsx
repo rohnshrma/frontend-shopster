@@ -22,6 +22,20 @@ export const ProductContextProvider = ({children})=>{
     return updatedData;
      });
   };
+  const UpdatedHandler = (updateItem)=>{
+    setProduct((prevData)=> {
+      const updatedData = prevData.map((item)=>item.id === updateItem.id ? updateItem : item)
+        localStorage.setItem(
+      "products",
+      JSON.stringify(updatedData)
+    );
+
+    return updatedData;
+  }
+  )}
+
+  
+  
     // const DeleteHandler = (deletindex) =>{
     //     return setProduct(productData.filter((data , i)=> i !=deletindex))
     // };
@@ -39,7 +53,8 @@ export const ProductContextProvider = ({children})=>{
     return updatedData;
   });
 };
-    return <ProductContext.Provider value={{productData , ProductHandler , DeleteHandler}}>{children}</ProductContext.Provider>
+
+    return <ProductContext.Provider value={{productData , ProductHandler , DeleteHandler, UpdatedHandler}}>{children}</ProductContext.Provider>
 }
 
 export const useProductContext = ()=>{return useContext(ProductContext)};

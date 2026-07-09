@@ -7,6 +7,7 @@ import AllProducts from "./pages/productlisting";
 import ProductDetails from "./pages/peoductdetails"; 
 import AddProduct from "./pages/addproduct";
 import UpdateProduct from "./pages/updateproduct";
+import ProtectedRoute from "./route/protectedRoute";
 
 
 const App = ()=>{
@@ -15,11 +16,31 @@ const App = ()=>{
     <Routes>
       <Route path="/login" element ={<Login />} />
       <Route path="/register" element ={<Register />} />
-      <Route path="/" element ={<Dashboard />} />
-      <Route path="/products" element ={<AllProducts />} />
-      <Route path="/productsdetails/:id" element ={<ProductDetails />} />
-      <Route path="/addproduct" element = {<AddProduct />} />
-      <Route path="/updateproduct" element={<UpdateProduct />} />
+      <Route path="/" element ={
+        <ProtectedRoute>
+        <Dashboard />
+        </ProtectedRoute>
+       } />
+      <Route path="/products" element ={
+         <ProtectedRoute>
+          <AllProducts />
+         </ProtectedRoute>
+        } />
+      <Route path="/productsdetails/:id" element ={
+        <ProtectedRoute>
+        <ProductDetails />
+        </ProtectedRoute>
+        } />
+      <Route path="/addproduct" element = {
+        <ProtectedRoute>
+         <AddProduct />
+        </ProtectedRoute>
+        } />
+      <Route path="/updateproduct/:id" element={
+        <ProtectedRoute>
+        <UpdateProduct />
+        </ProtectedRoute>
+       } />
     </Routes>
     </BrowserRouter>
   )

@@ -3,6 +3,7 @@ import "../App.css"
 import login_img from "../assets/images/loginimage.svg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import API from "../api/axios";
 
 const Login = ()=>{
     const navigate = useNavigate();
@@ -14,21 +15,23 @@ const Login = ()=>{
         const{name  , value} = e.target;
         setLoginData((prevData)=>{return {...prevData , [name]:value}})
     }
-    const SubmitLogin = (e)=>{
+    const SubmitLogin = async (e)=>{
         e.preventDefault();
-        const user = JSON.parse(localStorage.getItem("users")) || [];
-        if(user && user.find((item)=>item.email === loginData.email && item.password === loginData.password)){
-           localStorage.setItem("token" , "temp_token");
+        try {
+           const response = await API("/auth/login", {
+            method: "POST",
+            body: JSON.stringify(loginData),
+           });
+           localStorage.setItem("token" , response.token);
             alert ("login successfully");
             setLoginData({
                 email:"",
                 password:""
             })
             navigate("/");
-        }
-         else{
-         alert("login failed")
-         }
+        } catch (error) {
+         alert(error.message || "login failed")
+         } 
     
     }
     return (

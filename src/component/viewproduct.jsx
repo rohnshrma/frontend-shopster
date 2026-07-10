@@ -1,6 +1,6 @@
 import "../App.css";
 import dummypro from "../assets/images/dummyproducts.webp";
-import { useProductContext } from "../context/productcontext";
+import { useProductContext } from "../context/productContextCore";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -10,11 +10,11 @@ const ViewProduct = ()=>{
 const navigate = useNavigate();
 const {id} = useParams();
 const {productData , DeleteHandler} = useProductContext();
-const handleDelete = ()=>{
-    DeleteHandler(id);
+const handleDelete = async ()=>{
+    await DeleteHandler(id);
     navigate("/products");
 }
-const product = productData.find((item) => item.id == id)
+const product = productData.find((item) => item.id === id)
     return(
         <section className="productdetails">
             <div className="container">

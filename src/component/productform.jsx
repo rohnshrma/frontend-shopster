@@ -1,7 +1,6 @@
 import "../App.css";
 import { useReducer , useState } from "react";
-import { useProductContext } from "../context/productcontext";
-import {v4 as uuidv4} from "uuid";
+import { useProductContext } from "../context/productContextCore";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -33,14 +32,9 @@ const ProductForm = () => {
   const {name , value} = e.target;
   dispatch({type:name , payload:value});
  }
- const SubmitHandler = (e)=>{
+ const SubmitHandler = async (e)=>{
   e.preventDefault();
-  const products = {
-    id : uuidv4(),
-    ...ProData
-  }
-  ProductHandler(products);
-  console.log("this is my data " , products)
+  await ProductHandler(ProData);
   dispatch({type:"RESET"})
   navigate("/products")
   return initialState;
@@ -96,26 +90,22 @@ const ProductForm = () => {
   );
 };
 
-const UpdateForm = ()=>{
+const UpdateFields = ({ products, id, UpdatedHandler })=>{
   const navigate = useNavigate();
-
-  const {productData , UpdatedHandler} = useProductContext();
-  const {id} = useParams();
-  const products = productData.find((product)=> product.id === id);
   const [updateData , setUpdateData] = useState({
-    id:products?.id,
-    name:products?.name,
-    category:products?.category,
-    price:products?.price,
-    description:products?.description,
+    id: products?.id || id,
+    name: products?.name || "",
+    category: products?.category || "",
+    price: products?.price || "",
+    description: products?.description || "",
   });
  const changeHandler = (e)=>{
   const { name , value} = e.target;
   setUpdateData((prevData)=>{return {...prevData , [name] : value}})
  }
- const submitUpdate = (e)=>{
+ const submitUpdate = async (e)=>{
   e.preventDefault();
-  UpdatedHandler(updateData);
+  await UpdatedHandler(updateData);
   navigate(`/productsdetails/${id}`);
   return setUpdateData({
     id:"",
@@ -187,6 +177,18 @@ const UpdateForm = ()=>{
       </div>
     </section>
   );
+}
+
+const UpdateForm = ()=>{
+  const {productData , UpdatedHandler} = useProductContext();
+  const {id} = useParams();
+  const products = productData.find((product)=> product.id === id);
+
+  if (!products) {
+    return <p>Loading product...</p>;
+  }
+
+  return <UpdateFields key={products.id} products={products} id={id} UpdatedHandler={UpdatedHandler} />;
 }
 export default ProductForm;
 export {UpdateForm};

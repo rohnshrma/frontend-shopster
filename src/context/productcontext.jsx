@@ -1,60 +1,60 @@
-import { createContext , useState , useContext, useEffect } from "react";
-
-export const ProductContext = createContext();
+import { useCallback, useState, useEffect } from "react";
+import API from "../api/axios";
+import { ProductContext } from "./productContextCore";
 
 export const ProductContextProvider = ({children})=>{
     const [productData , setProduct] = useState([]);
-    useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("products")) || [];
-    setProduct(data);
+    const [loading , setLoading] = useState(false);
+    const [error , setError] = useState("");
+
+    const normalizeProduct = (product) => ({
+      ...product,
+      id: product._id || product.id,
+    });
+
+    const FetchProducts = useCallback(async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const response = await API("/product");
+        setProduct((response.data || []).map(normalizeProduct));
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
     }, []);
-    // const ProductHandler = (proData) =>{
-    //    return setProduct((prevdata) => {return [...prevdata , proData]})
-    // };
-    const ProductHandler = (proData) => {
-    setProduct((prevData) => {
-    const updatedData = [...prevData, proData];
 
-    localStorage.setItem(
-      "products",
-      JSON.stringify(updatedData)
-    );
-    return updatedData;
-     });
+    useEffect(() => {
+      FetchProducts();
+    }, [FetchProducts]);
+
+    const ProductHandler = async (proData) => {
+      const response = await API("/product", {
+        method: "POST",
+        body: JSON.stringify(proData),
+      });
+      const newProduct = normalizeProduct(response.data);
+      setProduct((prevData) => [...prevData, newProduct]);
+      return newProduct;
   };
-  const UpdatedHandler = (updateItem)=>{
-    setProduct((prevData)=> {
-      const updatedData = prevData.map((item)=>item.id === updateItem.id ? updateItem : item)
-        localStorage.setItem(
-      "products",
-      JSON.stringify(updatedData)
-    );
 
-    return updatedData;
+  const UpdatedHandler = async (updateItem)=>{
+    const response = await API(`/product/${updateItem.id}`, {
+      method: "PUT",
+      body: JSON.stringify(updateItem),
+    });
+    const updatedProduct = normalizeProduct(response.data);
+    setProduct((prevData)=> prevData.map((item)=>item.id === updatedProduct.id ? updatedProduct : item));
+    return updatedProduct;
   }
-  )}
-
   
-  
-    // const DeleteHandler = (deletindex) =>{
-    //     return setProduct(productData.filter((data , i)=> i !=deletindex))
-    // };
-    const DeleteHandler = (id) => {
-  setProduct((prevData) => {
-    const updatedData = prevData.filter(
-      (item) => item.id !== id
-    );
-
-    localStorage.setItem(
-      "products",
-      JSON.stringify(updatedData)
-    );
-
-    return updatedData;
-  });
+    const DeleteHandler = async (id) => {
+      await API(`/product/${id}`, {
+        method: "DELETE",
+      });
+      setProduct((prevData) => prevData.filter((item) => item.id !== id));
 };
 
-    return <ProductContext.Provider value={{productData , ProductHandler , DeleteHandler, UpdatedHandler}}>{children}</ProductContext.Provider>
+    return <ProductContext.Provider value={{productData , loading , error , FetchProducts , ProductHandler , DeleteHandler, UpdatedHandler}}>{children}</ProductContext.Provider>
 }
-
-export const useProductContext = ()=>{return useContext(ProductContext)};

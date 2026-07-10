@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import "../App.css"
 import Layout from "../component/layout"
 import ProductList from "../component/productlist"
 import Search_filter from "../component/search-filter"
-import { useProductContext } from "../context/productcontext"
+import { useProductContext } from "../context/productContextCore"
 
 
 const AllProducts = ()=>{
     const  {productData} = useProductContext();
     
-    const [allproduct , setAllProducts] = useState(productData)
     const [searchData , setSearchData] =useState ({
     search:"",
     filter:""
@@ -19,14 +18,11 @@ const AllProducts = ()=>{
         const {name ,value} = e.target;
         setSearchData((prevData)=>{return{...prevData , [name]:value.toLowerCase()}});
     }
-    useEffect(()=>{
-    const filterProducts = productData.filter((products)=>{
+    const allproduct = productData.filter((products)=>{
         const matchSearch = products.name.toLowerCase().includes(searchData.search);
         const matchFilter = searchData.filter ? products.category.toLowerCase().includes(searchData.filter):true
     return  matchSearch && matchFilter;
     })
-    setAllProducts(filterProducts)
-    },[searchData , productData])
 
    
     return (

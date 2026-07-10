@@ -2,7 +2,7 @@ import "../App.css"
 import Layout from "../component/layout"
 import Statistics from "../component/statistics"
 import ProductList from "../component/productlist"
-import { useProductContext } from "../context/productcontext"
+import { useProductContext } from "../context/productContextCore"
 
 
 const Dashboard = ()=>{

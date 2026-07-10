@@ -1,8 +1,9 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import "../App.css"
 import register_img from "../assets/images/registerimage.svg";
 import {useNavigate} from "react-router-dom"
 import { Link } from "react-router-dom";
+import API from "../api/axios";
 
 const Register = ()=>{
     const navigate = useNavigate();
@@ -15,17 +16,21 @@ const Register = ()=>{
         const {name , value} = e.target;
         setRegisterData((prevData)=>{return{...prevData , [name] : value}});
     }
-    const SubmitRegister = (e)=>{
+    const SubmitRegister = async (e)=>{
         e.preventDefault();
-        const users = JSON.parse(localStorage.getItem("users" )) || [];
-        const existingUser =  users.find((items) => items.email === registerData.email)
-        if(existingUser){
-            console.log("email already exit , please register with another email")
+        try {
+          await API("/auth/register", {
+            method: "POST",
+            body: JSON.stringify({
+              username: registerData.name,
+              email: registerData.email,
+              password: registerData.password,
+            }),
+          });
+        } catch (error) {
+            alert(error.message || "register failed")
             return;
         }
-
-        users.push(registerData);
-        localStorage.setItem("users" , JSON.stringify(users));
         alert("register successfully");
         setRegisterData({
             name:"",

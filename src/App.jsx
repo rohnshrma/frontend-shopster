@@ -7,6 +7,8 @@ import ProductDetails from "./pages/peoductdetails";
 import AddProduct from "./pages/addproduct";
 import UpdateProduct from "./pages/updateproduct";
 import ProtectedRoute from "./route/protectedRoute";
+import BuyerRoute from "./route/buyerroutes";
+
 
 
 const App = ()=>{
@@ -41,6 +43,7 @@ const App = ()=>{
         </ProtectedRoute>
        } />
     </Routes>
+    <BuyerRoute />
     </BrowserRouter>
   )
 }

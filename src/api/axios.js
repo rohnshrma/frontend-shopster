@@ -1,7 +1,9 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 const API = async (path, options = {}) => {
-  const token = localStorage.getItem("token");
+ const token =
+  localStorage.getItem("buyerToken") ||
+  localStorage.getItem("token");
   const headers = {
     "Content-Type": "application/json",
     ...options.headers,

@@ -3,7 +3,6 @@
 ## Goal Of Phase 2
 
 Phase 1 is admin login, admin registration, and admin product CRUD.
-
 Phase 2 introduces the buyer side of Shopster:
 
 - Buyer registration

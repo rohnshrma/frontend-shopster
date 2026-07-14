@@ -442,3 +442,394 @@ margin-top: 2rem;
 .productform .addpro{
 margin-top: 2rem;
 }
+
+
+
+/* buyer side css  */
+.Registerform {
+ position: relative;
+}
+.Registerform .logo img{
+  width: 10rem;
+  position: absolute;
+  left: 2rem;
+  top: 1.5rem;
+}
+
+.webheader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 3rem 5rem;
+  gap:2rem;
+  padding-top: 1rem;
+}
+.webheader .logo{
+  width: 200px;
+}
+.webheader form{
+width: 45%;
+}
+.webheader form input{
+  padding-left: 2.5rem;
+  background: rgba(220, 220, 220, 0.381);
+  height: 3rem;
+}
+.webheader nav a , .webheader nav span{
+  text-decoration: none;
+  color:#000;
+  font-size: 16px;
+  font-weight: 400;
+}
+.webheader nav span{
+  background: rgba(109, 109, 240, 0.151);
+  color: #07096f;
+  padding: 0.6rem 1rem;
+  transition: 0.3s;
+}
+.webheader nav span:hover{
+  background: #07096f;
+  color:#fff;
+}
+.webheader nav span:hover i{
+  color:#fff
+}
+
+.webheader nav{
+  display: flex;
+  gap:2.5rem
+}
+.webheader nav a{
+  display: block;
+  text-align: center;
+}
+.webheader nav a:hover i{
+  color: #07096f;
+}
+.webheader nav span i{
+  margin-right: 1rem;
+  color:rgb(58 26 183);
+  
+  
+}
+.webheader nav a i{
+  color:black;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.webheader nav a:hover{
+  color:#07096f;
+}
+.banner{
+  padding-top: 2rem;
+  text-align: center;
+}
+.banner .bannerimg{
+border-radius: 1rem;
+width: 92%;
+margin:auto;
+
+}
+.shop-row{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap:2rem;
+}
+.shop-row .shopcard img{
+width: 100%;
+}
+.shoplist{
+  margin-top: 6rem;
+}
+.shoplist h3{
+  font-size: 25px;
+  font-weight: 600;
+  color:#07096f;
+  margin-bottom: 2rem;
+}
+.shop-row .shopcard{
+      position: relative;
+    margin-bottom: 2rem;
+    box-shadow: 0px 5px 26px -1px #b6b3b3ad;
+    border-radius: 0.5rem;
+    padding-bottom: 1rem;
+    overflow: hidden;
+}
+.shop-row .shopcard h4{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  padding-inline: 1rem;
+  color:#07096f
+}
+.shop-row .shopcard .shop-categ{
+  font-size: 15px;
+  font-weight: 400;
+  color:rgb(50, 50, 50);
+  padding-inline: 1rem;
+}
+.shop-row .shopcard h5{
+margin-top: 1rem;
+font-weight: 700;
+font-size: 18px;
+padding-inline: 1rem;
+}
+.shop-row .shopcard h5 span{
+  font-size: 14px;
+  color:green;
+  padding-left: 0.4rem;
+}
+.shop-row .shopcard a{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+}
+.shop-row .shopcard figure{
+  position: relative;
+  overflow: hidden;
+}
+.shop-row .shopcard img{
+  transition: 0.4s;
+}
+.shop-row .shopcard:has(a:hover) img{
+  transform: scale(1.05);
+}
+.footer {
+  text-align: center;
+  width: 70%;
+  margin: auto;
+  margin-top: 4rem;
+  
+}
+.footer p{
+  text-align: center;
+  border-top: 1px solid gainsboro;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  width: 100%;
+  margin: auto;
+  padding-inline: 4rem;
+}
+
+.quantity-box{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 2rem;
+
+}
+
+.quantity-box label{
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.quantity-control{
+    width: 140px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #e4e4e4;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.qty-btn{
+    width: 45px;
+    height: 100%;
+    border: none;
+    background: #fff;
+    font-size: 22px;
+    color: #666;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.qty-btn:hover{
+    background: #f5f5f5;
+}
+
+.qty-value{
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    border-left: 1px solid #e4e4e4;
+    border-right: 1px solid #e4e4e4;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carttitle{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block: 4rem 3rem;
+}
+.carttitle h3{
+  font-size: 25px;
+  font-weight: 700;
+}
+.carttitle p{
+  color:  green;
+  font-weight: 600;
+}
+.cartitems ul{
+  padding-left: 0;
+  border:1px solid gainsboro;
+  border-radius: 0.4rem;
+  padding: 2rem;
+}
+.cartitems ul li{
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+ margin-bottom: 1.5rem;
+ border-bottom: 1px solid gainsboro;
+ padding-bottom: 1.5rem;
+}
+.cartitems ul li img{
+  width: 80px;
+}
+.cartitems ul li div.d-flex{
+  display: flex;
+  align-items: center;
+  gap:2rem
+}
+.cartitems ul li h4{
+  font-size: 18px;
+  font-weight: 700;
+}
+.cartitems ul li div p{
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+.cartitems ul li .quantity-box{
+  margin-bottom: 0;
+}
+.cartitems ul li span{
+  cursor: pointer;
+}
+.cartitems ul li span i{
+  color:red;
+}
+.cartitems ul li:last-child{
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.cartbtn_total{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+.cartbtn_total a{
+  text-decoration: none;
+  background: #07096f;
+  color:#fff;
+  font-size: 16px;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.4rem;
+}
+.cartbtn_total h4{
+  font-weight: 700;
+  font-size: 21px;
+}
+ .cartbtn_total h4 span{
+  font-size: 16px;
+  font-weight: 400;
+  margin-left: 1rem;
+ }
+.buyerprofile {
+     background: #fcfcfc;
+    margin-top: 1rem;
+    height: 100vh;
+}
+ .buyerprofile h3{
+  margin-top: 4rem;
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 3rem;
+ }
+ .profilerow{
+  display: flex;
+    gap: 5rem;
+    border: 1px solid gainsboro;
+    border-radius: 0.4rem;
+    padding: 2rem;
+    background: #fff;
+ }
+ .profilerow img{
+  width: 10rem;
+  height: fit-content;
+ }
+
+ .profilerow ul{
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:2rem;
+  width: 100%;
+  
+ }
+ .profilerow ul li{
+  list-style: none;
+ }
+  .profilerow ul li label{
+    font-size: 16px;
+    margin-bottom: 1rem;
+    color: rgb(45, 45, 45);
+    font-weight: 800;
+  }
+   .profilerow ul li p{
+    font-size: 18px;
+    font-weight: 500;
+    background: #e2e2e24d;
+    padding: 1rem 1rem;
+    margin-bottom: 0;
+    
+   }
+   .editprofile form{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:2rem;
+
+   }
+   .editprofile form label{
+      font-size: 16px;
+    margin-bottom: 1rem;
+    color: rgb(45, 45, 45);
+   }
+  .editprofile form input{
+    height: 3rem;
+  }
+   
+  .editprofile  .profileinfo{
+    width: 100%;
+  }
+  .buyerregister .registerbox img{
+     height: 100%;
+    background: rgb(210, 217, 250);
+    object-fit: contain;
+}
+
+ .buyerregister {
+  padding-block: 5rem;
+  height: auto;
+ }
+ .update_deletebtn button{
+  margin-left: 2rem;
+  background: orangered;
+  padding-inline: 1.5rem;
+ }

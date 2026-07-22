@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "../../App.css";
 import profileimg from "../../assets/images/profile.png";
 import BuyerHeader from "../../component/buyers/buyer-header";
-import { useBuyerProfileContext } from "../../context/BuyerProfileContext";
+import { useBuyerProfileContext } from "../../context/buyerProfileContextCore";
 import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
@@ -43,7 +43,7 @@ const EditProfile = () => {
 
       navigate("/buyers/profile");
     } catch (err) {
-      console.log(err.message);
+      alert(err.message || "Failed to update profile");
     }
   };
 

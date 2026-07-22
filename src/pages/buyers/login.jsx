@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import API from "../../api/axios";
-import { useBuyerProfileContext } from "../../context/BuyerProfileContext";
+import { useBuyerProfileContext } from "../../context/buyerProfileContextCore";
 
 
 
@@ -26,7 +26,8 @@ const BuyerLogin = ()=>{
    try{
    const response =  await API("/buyer/login", {
     method:"POST",
-    body:JSON.stringify(buyerLogin)
+    body:JSON.stringify(buyerLogin),
+    tokenType: "buyer",
     })
     localStorage.setItem("buyerToken" , response.token)
    alert("login successully");

@@ -833,3 +833,77 @@ padding-inline: 1rem;
   background: orangered;
   padding-inline: 1.5rem;
  }
+
+/* Shop filter row */
+.shop-filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.shop-filter-row h3 {
+  margin-bottom: 0;
+}
+.category-filter select {
+  padding: 0.5rem 1rem;
+  border: 1px solid gainsboro;
+  border-radius: 0.4rem;
+  min-width: 180px;
+}
+
+/* Shop status messages */
+.shop-status {
+  text-align: center;
+  padding: 3rem;
+  font-size: 16px;
+  color: #666;
+}
+.shop-error {
+  color: orangered;
+}
+
+/* Clear cart button */
+.clear-cart-btn {
+  background: orangered;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.4rem;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.clear-cart-btn:hover {
+  background: #000;
+}
+
+/* Checkout note */
+.checkout-note {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(109, 109, 240, 0.1);
+  border-radius: 0.4rem;
+  color: #07096f;
+  font-weight: 600;
+}
+
+/* Login link in buyer header */
+.webheader nav .login-link {
+  background: rgba(109, 109, 240, 0.151);
+  color: #07096f;
+  padding: 0.6rem 1rem;
+  transition: 0.3s;
+  border-radius: 0.3rem;
+}
+.webheader nav .login-link:hover {
+  background: #07096f;
+  color: #fff;
+}
+.webheader nav .login-link:hover i {
+  color: #fff;
+}
+.webheader nav .login-link i {
+  margin-right: 0.5rem;
+  display: inline;
+}

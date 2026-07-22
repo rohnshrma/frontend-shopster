@@ -33,6 +33,7 @@ export const ProductContextProvider = ({children})=>{
       const response = await API("/product", {
         method: "POST",
         body: JSON.stringify(proData),
+        tokenType: "admin",
       });
       const newProduct = normalizeProduct(response.data);
       setProduct((prevData) => [...prevData, newProduct]);
@@ -43,6 +44,7 @@ export const ProductContextProvider = ({children})=>{
     const response = await API(`/product/${updateItem.id}`, {
       method: "PUT",
       body: JSON.stringify(updateItem),
+      tokenType: "admin",
     });
     const updatedProduct = normalizeProduct(response.data);
     setProduct((prevData)=> prevData.map((item)=>item.id === updatedProduct.id ? updatedProduct : item));
@@ -52,6 +54,7 @@ export const ProductContextProvider = ({children})=>{
     const DeleteHandler = async (id) => {
       await API(`/product/${id}`, {
         method: "DELETE",
+        tokenType: "admin",
       });
       setProduct((prevData) => prevData.filter((item) => item.id !== id));
 };

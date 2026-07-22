@@ -1,21 +1,22 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import API from "../api/axios";
-
-export const BuyerProfileContext = createContext();
+import { BuyerProfileContext } from "./buyerProfileContextCore";
 
 export const BuyerProfileProvider = ({ children }) => {
   const [buyerProfile, setBuyerProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  // Fetch Buyer Profile
+  const [error, setError] = useState("");
+
   const fetchBuyerProfile = async () => {
     try {
+      setError("");
       const response = await API("/buyer/profile", {
         method: "GET",
+        tokenType: "buyer",
       });
-
       setBuyerProfile(response.data);
     } catch (err) {
-      console.log(err);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -23,7 +24,6 @@ export const BuyerProfileProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("buyerToken");
-
     if (token) {
       fetchBuyerProfile();
     } else {
@@ -31,37 +31,35 @@ export const BuyerProfileProvider = ({ children }) => {
     }
   }, []);
 
-  // Update Buyer Profile
   const UpdatedHandler = async (updateItem) => {
     try {
-      const response = await API(`/buyer/profile/${updateItem._id}`, {
+      setError("");
+      const response = await API("/buyer/profile", {
         method: "PUT",
         body: JSON.stringify(updateItem),
+        tokenType: "buyer",
       });
-
       setBuyerProfile(response.data);
-
       return response.data;
     } catch (err) {
-      console.log(err);
+      setError(err.message);
       throw err;
     }
   };
 
-  const DeleteHandler = async (id) => {
-  try {
-    await API(`/buyer/profile/${id}`, {
-      method: "DELETE",
-    });
-
-    localStorage.removeItem("buyerToken");
-    setBuyerProfile(null);
-
-  } catch (err) {
-    console.log(err);
-  }
-};
-
+  const DeleteHandler = async () => {
+    try {
+      setError("");
+      await API("/buyer/profile", {
+        method: "DELETE",
+        tokenType: "buyer",
+      });
+      localStorage.removeItem("buyerToken");
+      setBuyerProfile(null);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   return (
     <BuyerProfileContext.Provider
@@ -69,16 +67,13 @@ export const BuyerProfileProvider = ({ children }) => {
         buyerProfile,
         setBuyerProfile,
         loading,
+        error,
         fetchBuyerProfile,
         UpdatedHandler,
-        DeleteHandler
+        DeleteHandler,
       }}
     >
       {children}
     </BuyerProfileContext.Provider>
   );
-};
-
-export const useBuyerProfileContext = () => {
-  return useContext(BuyerProfileContext);
 };

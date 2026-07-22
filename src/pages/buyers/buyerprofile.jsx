@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "../../App.css";
 import profileimg from "../../assets/images/profile.png";
 import BuyerHeader from "../../component/buyers/buyer-header";
-import { useBuyerProfileContext } from "../../context/BuyerProfileContext";
+import { useBuyerProfileContext } from "../../context/buyerProfileContextCore";
 import { useNavigate } from "react-router-dom";
 
 
@@ -11,7 +11,7 @@ const BuyerProfile = () => {
   const { buyerProfile, loading , DeleteHandler} = useBuyerProfileContext();
   const navigate = useNavigate();
   const handleDelete = async () => {
-  await DeleteHandler(buyerProfile?._id);
+  await DeleteHandler();
   navigate("/buyers/login");
 };
   if (loading) {

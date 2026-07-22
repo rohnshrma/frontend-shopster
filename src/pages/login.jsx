@@ -21,6 +21,7 @@ const Login = ()=>{
            const response = await API("/auth/login", {
             method: "POST",
             body: JSON.stringify(loginData),
+            tokenType: "admin",
            });
            localStorage.setItem("token" , response.token);
             alert ("login successfully");

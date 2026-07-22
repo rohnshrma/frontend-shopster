@@ -9,7 +9,7 @@ const Search_filter = ({searchHandler})=>{
                     <input type="text" className="form-control" name="search" placeholder="Search product..." onChange={searchHandler} />
                 </div>
                   <div className="form-group">
-                    <i class="fa-solid fa-filter search-icon"></i>
+                    <i className="fa-solid fa-filter search-icon"></i>
                    <select className="form-control" onChange={searchHandler} name="filter">
                     <option value=""> Filter by Category..</option>
                     <option value="Electronics">Electronics</option>

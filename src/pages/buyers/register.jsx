@@ -74,6 +74,7 @@ const BuyerRegister = () => {
       await API("/buyer/register", {
         method: "POST",
         body: JSON.stringify(buyerRegister),
+        tokenType: "buyer",
       });
     } catch (err) {
       alert(err.message || "failed to register");

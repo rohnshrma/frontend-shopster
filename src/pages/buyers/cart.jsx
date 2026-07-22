@@ -1,7 +1,7 @@
 import "../../App.css";
 import BuyerHeader from "../../component/buyers/buyer-header";
 import CartItems from "../../component/buyers/cartitems";
-import { useCartContext } from "../../context/CartContext";
+import { useCartContext } from "../../context/cartContextCore";
 
 
 const Cart = () => {

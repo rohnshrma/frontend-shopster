@@ -876,18 +876,34 @@ padding-inline: 1rem;
 .clear-cart-btn:hover {
   background: #000;
 }
-
+.cart{
+  background: #f4f4f477;
+}
 /* Checkout note */
 .checkout-note {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 3.5rem;
   padding: 1rem;
-  background: rgba(109, 109, 240, 0.1);
+  background: #137215;
   border-radius: 0.4rem;
-  color: #07096f;
   font-weight: 600;
+  border:1px solid #8b8989;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.checkout-note:hover{
+  background: #0c0fa2;
+
 }
 
+.checkout-note a{
+  font-size: 1.2rem;
+  text-decoration: none;
+  color:#f4f1f1
+}
+.checkout-note:hover a{
+  color:#fff
+}
 /* Login link in buyer header */
 .webheader nav .login-link {
   background: rgba(109, 109, 240, 0.151);
@@ -906,4 +922,41 @@ padding-inline: 1rem;
 .webheader nav .login-link i {
   margin-right: 0.5rem;
   display: inline;
+}
+.form-check.codbtn{
+  padding-left: 2.5rem  !important;
+}
+.codbtn input{
+  margin-top: 0.5rem !important;
+}
+.checkout_page, .myorder{
+  background: #f4f4f477;
+}
+.checkout_page form label{
+  font-weight: 700;
+}
+.checkoutinput{
+  margin-bottom: 1.5rem;
+}
+.checkoutinput input{
+  padding-block: 0.6rem;
+}
+.admin_order{
+  margin-top: 3rem;
+}
+.admin_order table tr td{
+  padding: 0.7rem 1rem;
+}
+.admin_order table th{
+  padding: 1rem;
+
+}
+.admin_order table thead tr th{
+  background: #f4f4f4;
+}
+.admin_order table .badge{
+  font-size: 0.9rem;
+}
+.adminorderDetail .badge{
+  font-size: 1rem;
 }

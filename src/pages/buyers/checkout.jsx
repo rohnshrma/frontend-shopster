@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import { useState , useEffect } from "react";
 import BuyerHeader from "../../component/buyers/buyer-header";
 import dummyimg from "../../assets/images/dummyproducts.webp";
 import { Link } from "react-router-dom";
@@ -13,8 +13,9 @@ import API from "../../api/axios.js"
 const Checkout = () => {
 
   const navigate = useNavigate();
-  const {cartItems ,totalAmount} = useCartContext();
-  const {buyerProfile, loading } = useBuyerProfileContext();
+  const {cartItems ,totalAmount, fetchCart} = useCartContext();
+  const {buyerProfile} = useBuyerProfileContext();
+  const [placingOrder, setPlacingOrder] = useState(false);
   const [formData, setFormData] = useState({
     username:"",
     phone:"",
@@ -46,6 +47,10 @@ const Checkout = () => {
 
   const submitHandler = async(e)=>{
     e.preventDefault();
+    if(cartItems.length === 0){
+      alert("Your cart is empty. Add items before checking out.");
+      return;
+    }
     const {username , phone, email, address , city , pincode , landmark} = formData;
     if(!username || !phone || !email || !address || !city || !pincode){
       alert ("please filled all required fields");
@@ -53,6 +58,7 @@ const Checkout = () => {
     }
     const shippingAddress = ` ${address}, ${landmark}, ${city}, ${pincode}`;
 
+    setPlacingOrder(true);
     try{
     const response = await API("/order/place-order" , {
       method : "POST",
@@ -63,21 +69,41 @@ const Checkout = () => {
       })
     })
     console.log("Order placed", response)
-   
-    localStorage.setItem("lastOrder" ,  JSON.stringify(response.data))
 
-    alert("order Placed successfully")
-    localStorage.getItem("lastOrder")
-    navigate("/order-success");
+    await fetchCart();
+
+    navigate(`/order-success/${response.data._id}`);
 
     }
     catch(err){
     console.log("placed order error" , err);
-    alert (err.message , "failed to place order")
+    alert (err.message || "failed to place order")
     }
-  
+    finally{
+      setPlacingOrder(false);
+    }
+
   }
 
+
+  if (cartItems.length === 0) {
+    return (
+      <>
+        <BuyerHeader />
+        <section className="checkout_page">
+          <div className="container py-5 text-center">
+            <h2 className="fw-bold">Checkout</h2>
+            <p className="text-muted">
+              Your cart is empty. Add items to your cart before checking out.
+            </p>
+            <Link to="/shop" className="btn btn-primary">
+              Continue Shopping
+            </Link>
+          </div>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>
@@ -293,8 +319,9 @@ const Checkout = () => {
                     style={{
                       background: "#5B3DF5",
                     }}
+                    disabled={placingOrder}
                   >
-                    Place Order
+                    {placingOrder ? "Placing Order..." : "Place Order"}
                   </button>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../component/layout";
 import dummyimg from "../assets/images/dummyproducts.webp";
 import API from "../api/axios";
@@ -162,11 +162,11 @@ if (!order) {
                 <div className="card-body p-4">
                   <h5 className="fw-bold mb-4">Buyer Information</h5>
 
-                  <h6>{order.buyerId?.username}</h6>
+                  <h6>{order.buyer?.username}</h6>
 
-                  <p className="mb-2">{order.buyerId?.phone}</p>
+                  <p className="mb-2">{order.buyer?.phone}</p>
 
-                  <p className="mb-4">{order.buyerId?.email}</p>
+                  <p className="mb-4">{order.buyer?.email}</p>
 
                   <p className="mb-1">{order.shippingAddress}</p>
                 </div>
@@ -193,7 +193,7 @@ if (!order) {
 
                   <tbody>
                     {order.items.map((item) => (
-                      <tr key={item.productId}>
+                      <tr key={item._id}>
                         <td>
                           <div className="d-flex align-items-center">
                             <img

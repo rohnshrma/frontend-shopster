@@ -1,19 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { BsCheckCircleFill } from "react-icons/bs";
 import BuyerHeader from "../../component/buyers/buyer-header";
-
+import API from "../../api/axios";
 
 const OrderSuccess = () => {
- 
+  const { id } = useParams();
   const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(()=>{
-    const saveOrder = localStorage.getItem("lastOrder");
-    if(saveOrder){
-      setOrder(JSON.parse(saveOrder));
-    }
-  },[])
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const response = await API(`/order/order-history/${id}`, {
+          method: "GET",
+          tokenType: "buyer",
+        });
+        setOrder(response.data);
+      } catch (err) {
+        console.log("failed to fetch order", err);
+        setOrder(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrder();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <>
+        <BuyerHeader />
+        <p className="text-center mt-5">Loading order...</p>
+      </>
+    );
+  }
+
+  if (!order) {
+    return (
+      <>
+        <BuyerHeader />
+        <p className="text-center mt-5">Order not found.</p>
+      </>
+    );
+  }
 
   return (
     <>
@@ -53,7 +83,7 @@ const OrderSuccess = () => {
                     </small>
 
                     <h6 className="fw-bold text-primary">
-                      {order?._id}
+                      {order._id}
                     </h6>
                   </div>
 
@@ -63,7 +93,7 @@ const OrderSuccess = () => {
                     </small>
 
                     <h6 className="fw-semibold">
-                    {order?.createdAt
+                    {order.createdAt
   ? new Date(order.createdAt).toLocaleDateString()
   : ""}
                     </h6>
@@ -75,7 +105,7 @@ const OrderSuccess = () => {
                     </small>
 
                     <h6 className="fw-semibold">
-                     ₹{order?.totalAmount}
+                     ₹{order.totalAmount}
                     </h6>
                   </div>
 
@@ -85,12 +115,38 @@ const OrderSuccess = () => {
                     </small>
 
                     <h6 className="fw-semibold">
-                      {order?.paymentMethod}
+                      {order.paymentMethod}
                     </h6>
                   </div>
 
                 </div>
 
+              </div>
+            </div>
+
+            <div className="card shadow-sm border-0 rounded-4 mb-5">
+              <div className="card-body p-4">
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <h5 className="fw-bold mb-0">Ordered Items</h5>
+                  <span className="badge bg-warning text-dark px-3 py-2">
+                    {order.status}
+                  </span>
+                </div>
+
+                {order.items.map((item) => (
+                  <div
+                    key={item._id}
+                    className="d-flex justify-content-between align-items-center mb-3"
+                  >
+                    <div>
+                      <h6 className="mb-1">{item.name}</h6>
+                      <small className="text-muted">
+                        Qty : {item.quantity}
+                      </small>
+                    </div>
+                    <strong>₹{item.price * item.quantity}</strong>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -121,7 +177,7 @@ const OrderSuccess = () => {
       </div>
     </section>
     </>
-  
+
   );
 };
 

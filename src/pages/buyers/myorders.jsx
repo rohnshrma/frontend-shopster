@@ -1,5 +1,5 @@
 
-import React, {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BuyerHeader from "../../component/buyers/buyer-header";
 import dummyimg from "../../assets/images/dummyproducts.webp";
 import { Link } from "react-router-dom";
@@ -63,7 +63,13 @@ useEffect(()=>{
             </p>
           </div>
 
-          {orders.map((order) => (
+          {loading && <p className="text-center py-5">Loading orders...</p>}
+
+          {!loading && orders.length === 0 && (
+            <p className="text-center py-5">No orders yet.</p>
+          )}
+
+          {!loading && orders.map((order) => (
             <div
               className="card border-0 shadow-sm rounded-4 mb-4"
               key={order._id}

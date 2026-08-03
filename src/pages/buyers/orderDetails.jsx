@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import BuyerHeader from "../../component/buyers/buyer-header";
 import dummyimg from "../../assets/images/dummyproducts.webp";
 import { useParams } from "react-router-dom";
@@ -6,7 +6,7 @@ import API from "../../api/axios";
 
 const OrderDetails = () => {
   const { id } = useParams();
-  const [order, setOrder] = useState([]);
+  const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,6 +20,7 @@ const OrderDetails = () => {
         setOrder(response.data);
       } catch (err) {
         console.log("failed to fetch daata", err);
+        setOrder(null);
       } finally {
         setLoading(false);
       }

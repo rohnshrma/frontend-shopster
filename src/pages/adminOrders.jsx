@@ -56,8 +56,8 @@ const filterOrder = orders.filter((order) => {
 
   const matchSearch =
     order._id?.toLowerCase().includes(searchText) ||
-    order.buyerId?.username?.toLowerCase().includes(searchText) ||
-    order.buyerId?.email?.toLowerCase().includes(searchText);
+    order.buyer?.username?.toLowerCase().includes(searchText) ||
+    order.buyer?.email?.toLowerCase().includes(searchText);
 
   const matchFilter =
     filter === "" || order.status === filter;
@@ -129,7 +129,7 @@ const filterOrder = orders.filter((order) => {
                     <tr key={order._id} >
                       <td>{order._id}</td>
 
-                      <td>{order.buyerId?.username || order.buyerId?.email ||  "Unknown"}</td>
+                      <td>{order.buyer?.username || order.buyer?.email ||  "Unknown"}</td>
 
                       <td>{new Date(order.createdAt).toLocaleDateString()}</td>
 

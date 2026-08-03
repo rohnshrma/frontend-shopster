@@ -109,7 +109,7 @@ const App = () => {
           <Checkout />
           </BuyerProtectedRoute>
           } />
-        <Route path="/order-success" element={
+        <Route path="/order-success/:id" element={
             <BuyerProtectedRoute>
                <OrderSuccess />
             </BuyerProtectedRoute>

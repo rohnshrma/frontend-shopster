@@ -41,8 +41,8 @@ const BuyerHeader = ({ search, setSearch }) => {
          <i className="fa-solid fa-gift"></i> My Orders
         </Link>
         <Link to="/cart">
-          <i className="fa-solid fa-cart-arrow-down"></i>
-          Cart {cartItems.length > 0 && `(${cartItems.length})`}
+          <i className="fa-solid fa-cart-arrow-down"><sup>{cartItems.length > 0 && `(${cartItems.length})`}</sup></i>
+          Cart 
         </Link>
         {isLoggedIn && (
           <Link to="/buyers/profile">

@@ -171,7 +171,7 @@ const OrderDetails = () => {
                   <div>
                     <small className="text-muted d-block">Payment Method</small>
 
-                    <h6 className="fw-semibold">Cash on Delivery</h6>
+                    <h6 className="fw-semibold"> {order.paymentMethod}</h6>
                   </div>
                 </div>
 

@@ -1,90 +1,103 @@
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import BuyerHeader from "../../component/buyers/buyer-header";
 import dummyimg from "../../assets/images/dummyproducts.webp";
 import { Link } from "react-router-dom";
 import { useBuyerProfileContext } from "../../context/buyerProfileContextCore";
 import { useNavigate } from "react-router-dom";
 import { useCartContext } from "../../context/cartContextCore";
-import API from "../../api/axios.js"
-
-
-
+import API from "../../api/axios.js";
+import PaymentMethodSelector from "../../component/buyers/paymentmethod-selector.jsx";
 
 const Checkout = () => {
-
   const navigate = useNavigate();
-  const {cartItems ,totalAmount, fetchCart} = useCartContext();
-  const {buyerProfile} = useBuyerProfileContext();
+  const { cartItems, totalAmount, fetchCart } = useCartContext();
+  const { buyerProfile } = useBuyerProfileContext();
   const [placingOrder, setPlacingOrder] = useState(false);
   const [formData, setFormData] = useState({
-    username:"",
-    phone:"",
-    email:"",
-    address:"",
-    landmark:"",
-    city:"",
-    pincode:""
+    username: "",
+    phone: "",
+    email: "",
+    address: "",
+    landmark: "",
+    city: "",
+    pincode: "",
   });
-   
-  useEffect(()=>{
-    if(buyerProfile){
-    setFormData({
-    username:`${buyerProfile?.username}`,
-    phone:`${buyerProfile?.phone}`,
-    email:`${buyerProfile?.email}`,
-    address:`${buyerProfile?.address}`,
-    landmark:"",
-    city:"",
-    pincode:""
-      })
+  const [paymentMethod, setPaymentMethod] = useState(null);
+
+  useEffect(() => {
+    if (buyerProfile) {
+      setFormData({
+        username: `${buyerProfile?.username}`,
+        phone: `${buyerProfile?.phone}`,
+        email: `${buyerProfile?.email}`,
+        address: `${buyerProfile?.address}`,
+        landmark: "",
+        city: "",
+        pincode: "",
+      });
     }
-  }, [buyerProfile])
+  }, [buyerProfile]);
 
-  const formHandler = (e)=>{
-    const {name , value} = e.target;
-    setFormData((prevData)=>{return{...prevData , [name] : value}});
-  }
+  const formHandler = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => {
+      return { ...prevData, [name]: value };
+    });
+  };
 
-  const submitHandler = async(e)=>{
-    e.preventDefault();
-    if(cartItems.length === 0){
+  const submitHandler = async () => {
+    if (cartItems.length === 0) {
       alert("Your cart is empty. Add items before checking out.");
       return;
     }
-    const {username , phone, email, address , city , pincode , landmark} = formData;
-    if(!username || !phone || !email || !address || !city || !pincode){
-      alert ("please filled all required fields");
+    const { username, phone, email, address, city, pincode, landmark } =
+      formData;
+    if (!username || !phone || !email || !address || !city || !pincode) {
+      alert("please filled all required fields");
       return;
     }
     const shippingAddress = ` ${address}, ${landmark}, ${city}, ${pincode}`;
 
     setPlacingOrder(true);
-    try{
-    const response = await API("/order/place-order" , {
-      method : "POST",
-      tokenType:"buyer",
-      body:JSON.stringify({
-        shippingAddress,
-        paymentMethod: "COD",
-      })
-    })
-    console.log("Order placed", response)
+    try {
+      const response = await API("/order/place-order", {
+        method: "POST",
+        tokenType: "buyer",
+        body: JSON.stringify({
+          shippingAddress,
+          paymentMethod,
+        }),
+      });
+      console.log("Order placed", response);
 
-    await fetchCart();
+      if (paymentMethod === "stripe") {
+        window.location.href = response.data.checkoutUrl;
+        return;
+      }
 
-    navigate(`/order-success/${response.data._id}`);
+      await fetchCart();
 
-    }
-    catch(err){
-    console.log("placed order error" , err);
-    alert (err.message || "failed to place order")
-    }
-    finally{
+      navigate(`/order-success/${response.data.order._id}`);
+    } catch (err) {
+      console.log("placed order error", err);
+      alert(err.message || "failed to place order");
+    } finally {
       setPlacingOrder(false);
     }
+  };
 
-  }
+  const paymentHandler = (e) => {
+    e.preventDefault();
 
+    if (!paymentMethod) {
+      alert("please select payment method");
+      return;
+    }
+
+    if (paymentMethod === "COD" || paymentMethod === "stripe") {
+      submitHandler();
+    } 
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -124,7 +137,7 @@ const Checkout = () => {
               <div className="card shadow-sm border-0 rounded-4">
                 <div className="card-body p-4">
                   <h4 className="fw-bold mb-4">Delivery Details</h4>
-                   <form>                   
+                  <form>
                     <div className="checkoutinput">
                       <label className="form-label">Full Name</label>
                       <input
@@ -211,7 +224,6 @@ const Checkout = () => {
                       </div>
                     </div>
                   </form>
-                 
                 </div>
               </div>
 
@@ -293,28 +305,14 @@ const Checkout = () => {
 
               <div className="card shadow-sm border-0 rounded-4">
                 <div className="card-body p-4">
-                  <h4 className="fw-bold mb-3">Payment Method</h4>
+                  <PaymentMethodSelector
+                    paymentMethod={paymentMethod}
+                    setPaymentMethod={setPaymentMethod}
+                  />
 
-                  <div className="form-check border rounded-3 p-3 codbtn">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      checked
-                      readOnly
-                    />
-
-                    <label className="form-check-label ms-2">
-                      <strong>Cash on Delivery</strong>
-
-                      <br />
-
-                      <small className="text-muted">
-                        Pay when your order is delivered.
-                      </small>
-                    </label>
-                  </div>
-
-                  <button type="submit" onClick={submitHandler}
+                  <button
+                    type="submit"
+                    onClick={paymentHandler}
                     className="btn w-100 text-white mt-4 py-3"
                     style={{
                       background: "#5B3DF5",

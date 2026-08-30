@@ -32,9 +32,12 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li>
-          <a href="#">
+          <NavLink
+            to="/admin/orders"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
             <i className="fa-solid fa-cart-arrow-down"></i> Order
-          </a>
+          </NavLink>
         </li>
         <li>
           <a href="#">

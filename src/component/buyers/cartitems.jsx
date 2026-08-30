@@ -76,7 +76,7 @@ const CartItems = () => {
           Total Amount:<span>₹ {totalAmount}</span>
         </h4>
       </div>
-      <p className="checkout-note">Checkout will be added in Phase 3</p>
+      <p className="checkout-note"><Link to="/checkout">Proceed to Checkout</Link></p>
     </div>
   );
 };

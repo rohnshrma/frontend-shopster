@@ -15,6 +15,13 @@ import Cart from "./pages/buyers/cart";
 import BuyerProfile from "./pages/buyers/buyerprofile";
 import EditProfile from "./pages/buyers/editprofile";
 import BuyerProtectedRoute from "./route/buyerprotectedroute";
+import Checkout from "./pages/buyers/checkout";
+import OrderSuccess from "./pages/buyers/orderSuccess";
+import MyOrders from "./pages/buyers/myorders";
+import OrderDetails from "./pages/buyers/orderDetails"
+import AdminOrder from "./pages/adminOrders";
+import AdminOrderDetails from "./pages/adminOrderDetails";
+
 
 const App = () => {
   return (
@@ -96,6 +103,38 @@ const App = () => {
             </BuyerProtectedRoute>
           }
         />
+        {/* Order and Checkout Routes  */}
+        <Route path="/checkout" element={
+          <BuyerProtectedRoute>
+          <Checkout />
+          </BuyerProtectedRoute>
+          } />
+        <Route path="/order-success/:id" element={
+            <BuyerProtectedRoute>
+               <OrderSuccess />
+            </BuyerProtectedRoute>
+         } />
+        <Route path="/buyers/orders" element={
+           <BuyerProtectedRoute>
+            <MyOrders />
+           </BuyerProtectedRoute>
+          } />
+        <Route path="/buyers/order-details/:id" element={
+           <BuyerProtectedRoute>
+            <OrderDetails />
+           </BuyerProtectedRoute>
+          } />
+        {/* Admin order  */}
+        <Route path="/admin/orders" element={
+          <ProtectedRoute>
+            <AdminOrder />
+          </ProtectedRoute>
+          } />
+        <Route path="/admin/orders/:id" element={
+           <ProtectedRoute>
+          <AdminOrderDetails />
+          </ProtectedRoute>
+          } />
       </Routes>
     </BrowserRouter>
   );

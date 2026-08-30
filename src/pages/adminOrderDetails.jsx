@@ -34,29 +34,51 @@ const AdminOrderDetails = () => {
 
   // refund function /////////////////////////
   const handleRefund = async () => {
-    const confirmed = window.confirm(
-      `Are you sure you want to refund ₹${order.totalAmount}?`,
-    );
+    const alreadyRefunded = Number(order.refundAmount || 0);
+    const remaining = Number(order.totalAmount) - alreadyRefunded;
 
-    if (!confirmed) return;
+    const input = window.prompt(
+      `Refund amount (max ₹${remaining.toFixed(2)}). Leave blank for a full refund of the remaining balance.`,
+      remaining.toFixed(2),
+    );
+    if (input === null) return;
+
+    const amount = input.trim() === "" ? remaining : Number(input);
+    if (!Number.isFinite(amount) || amount <= 0 || amount > remaining) {
+      alert(`Enter an amount between 0 and ₹${remaining.toFixed(2)}.`);
+      return;
+    }
+
+    const reason = window.prompt("Reason for refund:", "Customer request");
+    if (reason === null || reason.trim() === "") {
+      alert("A refund reason is required.");
+      return;
+    }
 
     try {
       setRefunding(true);
 
-      // Backend refund API will be connected here
-      // const response = await API(`/admin/orders/${id}/refund`, {
-      //   method: "POST",
-      //   tokenType: "admin",
-      // });
+      const response = await API(`/admin/refund/${id}`, {
+        method: "POST",
+        tokenType: "admin",
+        body: JSON.stringify({ amount, reason: reason.trim() }),
+      });
 
-      // setOrder(response.data);
+      // Re-fetch the order so the payment/refund status reflects the change
+      const refreshed = await API(`/admin/orders/${id}`, {
+        method: "GET",
+        tokenType: "admin",
+      });
+      setOrder(refreshed.data);
+      setStatus(refreshed.data.status);
 
       alert(
-        "Refund UI is ready. Actual Stripe refund API will be connected next.",
+        response.message ||
+          `Refund of ₹${Number(amount).toFixed(2)} processed successfully.`,
       );
     } catch (err) {
       console.log(err, "failed to refund order");
-      alert("Failed to process refund");
+      alert(err.message || "Failed to process refund");
     } finally {
       setRefunding(false);
     }
@@ -177,6 +199,17 @@ const AdminOrderDetails = () => {
 
                     <div className="col-7 fw-bold">₹{order.totalAmount}</div>
                   </div>
+
+                  {Number(order.refundAmount) > 0 && (
+                    <div className="row mb-3">
+                      <div className="col-5 fw-semibold">Refunded</div>
+
+                      <div className="col-7 text-danger fw-semibold">
+                        ₹{Number(order.refundAmount).toFixed(2)}
+                        {order.refundStatus === "partial" && " (partial)"}
+                      </div>
+                    </div>
+                  )}
 
                   <div className="row mb-4">
                     <div className="col-5 fw-semibold">Order Status</div>
